@@ -1,128 +1,630 @@
-# MandiCluster
-
+# 🌾 MandiCluster
 ### Agricultural Market Segmentation & Price-Pattern Intelligence Platform
-**Tagline:** *Discover Markets. Understand Prices. Make Informed Decisions.*
 
-MandiCluster is an agricultural market intelligence web application designed to help farmers and analysts understand agricultural market prices, discover similarities between mandis, analyze historical price patterns, identify unusual price observations, and compare potential selling destinations.
+**Discover Markets. Understand Prices. Make Informed Decisions.**
 
-The platform applies unsupervised machine learning algorithms to group agricultural markets with similar price behavior and presents the results through clean, interactive visualizations.
+<p align="center">
+  An ML-powered agricultural market intelligence platform that helps farmers and analysts understand price patterns, discover similar agricultural markets, detect unusual price movements, and compare potential selling destinations.
+</p>
 
----
-
-## 1. Core Technology Stack
-
-- **Frontend:** React 18, Vite, TypeScript, Tailwind CSS, Recharts, Lucide React, i18next (English, Hindi, Punjabi)
-- **Backend API:** Python 3.11, FastAPI, Pydantic, Uvicorn
-- **Machine Learning & Analytics:** Scikit-learn, Pandas, NumPy, SciPy
-- **Deployment Target:** Vercel (React Frontend + Python Serverless API)
+<p align="center">
+  <a href="https://mandi-cluster.vercel.app/">Live Demo</a> •
+  <a href="https://github.com/Sparsshgpt/MandiCluster">GitHub Repository</a>
+</p>
 
 ---
 
-## 2. Unsupervised Machine Learning Modules
+## 📌 Overview
 
-MandiCluster implements 8 core unsupervised machine learning models and 3 validation metrics:
+Agricultural market prices fluctuate across different mandis due to variations in demand, supply, arrivals, geographical conditions, and market activity. Farmers often find it difficult to identify suitable markets, understand historical price movements, and compare selling opportunities.
 
-| Task | Algorithms | Description |
-| :--- | :--- | :--- |
-| **Market Clustering** | **K-Means**, **MiniBatch K-Means**, **Hierarchical Agglomerative**, **DBSCAN** | Groups mandis by statistical feature vectors (Mean, Median, Standard Deviation, CV %, Trend Slope, and Average Arrivals). |
-| **Clustering Evaluation** | **Inertia / WCSS**, **Silhouette Score**, **Davies–Bouldin Index** | Evaluates cluster compactness, boundary separation, and optimal cluster count ($K$) via the Elbow method. |
-| **Dimensionality Reduction** | **PCA** (Linear) vs. **t-SNE** (Non-linear) | Visualizes high-dimensional mandi feature vectors in 2D space on identical observations. |
-| **Anomaly Detection** | **Isolation Forest**, **Local Outlier Factor (LOF)** | Identifies historical price shocks, weather gluts, and unusual market arrival anomalies. |
-| **Decision Support** | **Logistics Net Price Calculator** | Calculates net proceeds after road freight costs to compare potential destination mandis. |
+**MandiCluster** is a machine-learning-based agricultural market intelligence platform designed to address these challenges.
+
+The application uses unsupervised machine learning techniques and statistical analysis to identify patterns in agricultural market data. It groups mandis with similar price behaviour, evaluates clustering quality, visualizes market relationships, detects unusual price observations, and provides logistics-adjusted market recommendations.
+
+The platform combines a modern React frontend with a Python FastAPI backend to deliver an interactive analytical experience.
+
+## 🎯 Project Objectives
+
+- Analyze historical agricultural commodity prices.
+- Identify similarities between different agricultural markets.
+- Group mandis based on statistical price patterns.
+- Compare clustering algorithms and evaluate their performance.
+- Visualize complex market relationships using dimensionality reduction.
+- Detect unusual price movements and market anomalies.
+- Compare potential selling destinations after considering transportation costs.
+- Provide an interactive interface for exploring agricultural market intelligence.
+
+## ✨ Key Features
+
+### 1. Agricultural Market Analytics
+
+Analyze agricultural market data using multiple statistical indicators.
+
+- Average modal price
+- Minimum and maximum observed prices
+- Standard deviation
+- Coefficient of variation (CV%)
+- Historical price trends
+- Market-wise price rankings
+- Commodity distribution
+- Recent market observations
+
+### 2. Intelligent Market Clustering
+
+Discover groups of mandis with similar agricultural price behaviour using four clustering algorithms.
+
+| Algorithm | Purpose |
+|---|---|
+| K-Means | Partitions markets into K clusters |
+| MiniBatch K-Means | Performs computationally efficient clustering |
+| Hierarchical Agglomerative | Identifies hierarchical market relationships |
+| DBSCAN | Identifies density-based clusters and noise points |
+
+Market feature vectors can include:
+
+- Mean price
+- Median price
+- Standard deviation
+- Coefficient of variation
+- Price trend slope
+- Average market arrivals
+
+### 3. Clustering Evaluation
+
+Evaluate clustering quality using statistical validation techniques.
+
+- **Elbow Method / WCSS:** Helps identify a suitable number of clusters.
+- **Silhouette Score:** Measures how well observations fit their assigned clusters.
+- **Davies-Bouldin Index:** Evaluates cluster separation and compactness.
+
+These metrics help compare clustering configurations and understand the quality of the resulting groups.
+
+### 4. Dimensionality Reduction
+
+Visualize high-dimensional market feature vectors in a two-dimensional space.
+
+**Principal Component Analysis (PCA)**
+- Linear dimensionality reduction.
+- Preserves directions of maximum variance.
+- Helps visualize relationships between markets.
+
+**t-SNE**
+- Non-linear dimensionality reduction.
+- Helps reveal local similarities and patterns.
+- Provides an alternative visualization of market groupings.
+
+Both techniques are used to explore market relationships through visual comparisons.
+
+### 5. Price Anomaly Detection
+
+Identify unusual agricultural price observations using:
+
+- Isolation Forest
+- Local Outlier Factor (LOF)
+
+The anomaly detection module helps highlight unusual price behaviour and observations that may require further investigation.
+
+### 6. Market Comparison
+
+Compare multiple mandis for a selected agricultural commodity.
+
+The analysis includes:
+
+- Average modal prices
+- Latest recorded prices
+- Minimum and maximum prices
+- Price variability
+- Average arrivals
+- Historical price comparisons
+- Market-wise statistical indicators
+
+### 7. Logistics-Based Market Recommendations
+
+A market offering a higher selling price does not always provide the highest final return.
+
+MandiCluster includes a logistics-based recommendation module that considers:
+
+- Origin market
+- Destination market
+- Commodity
+- Quantity in quintals
+- Vehicle type
+- Transportation cost
+- Loading cost
+- Maximum travel distance
+
+It calculates freight-adjusted net proceeds to help compare potential selling destinations.
+
+### 8. CSV Data Upload and Validation
+
+Users can upload their own agricultural market datasets.
+
+The backend provides:
+
+- CSV file validation
+- Column standardization
+- Data cleaning
+- Validation reports
+- Dataset metadata
+- Data provenance information
+
+A successfully validated dataset becomes the active dataset for subsequent analytical requests within the running backend instance.
+
+### 9. Multilingual Interface
+
+The frontend includes internationalization support for:
+
+- English
+- Hindi
+- Punjabi
+
+This makes the platform more accessible to users with different language preferences.
 
 ---
 
-## 3. Project Directory Structure
+## 🧠 Machine Learning Methodology
+
+MandiCluster follows an unsupervised learning pipeline to discover patterns in agricultural market data.
+
+### Workflow
+
+1. **Data Collection:** Load the default agricultural market dataset or upload a custom CSV file.
+2. **Data Validation:** Validate columns, standardize data and handle data quality issues.
+3. **Feature Engineering:** Extract statistical features from market price and arrival information.
+4. **Feature Scaling:** Apply the selected scaling method before clustering.
+5. **Clustering:** Run the selected clustering algorithm.
+6. **Model Evaluation:** Evaluate cluster quality using validation metrics.
+7. **Dimensionality Reduction:** Apply PCA and t-SNE for visual exploration.
+8. **Anomaly Detection:** Identify unusual observations.
+9. **Market Recommendation:** Calculate freight-adjusted net proceeds for potential destinations.
+
+### Machine Learning Components
+
+| Category | Techniques |
+|---|---|
+| Clustering | K-Means, MiniBatch K-Means, Agglomerative, DBSCAN |
+| Evaluation | WCSS, Silhouette Score, Davies-Bouldin Index |
+| Dimensionality Reduction | PCA, t-SNE |
+| Anomaly Detection | Isolation Forest, LOF |
+| Statistical Analysis | Mean, Median, Standard Deviation, CV%, Trend Slope |
+
+---
+
+## 🏗️ System Architecture
+
+The application follows a frontend-backend architecture.
+
+```mermaid
+flowchart TD
+    A[User] --> B[React Frontend]
+    B --> C[API Service Layer]
+    C --> D[FastAPI Backend]
+    D --> E[Data Validation and Processing]
+    E --> F[Feature Engineering]
+    F --> G[Machine Learning Modules]
+    G --> H[Clustering and Evaluation]
+    G --> I[PCA and t-SNE]
+    G --> J[Anomaly Detection]
+    D --> K[Market Analytics]
+    D --> L[Logistics Recommendation]
+    H --> M[API Response]
+    I --> M
+    J --> M
+    K --> M
+    L --> M
+    M --> B
+    B --> N[Interactive Visualizations]
+```
+
+### Architecture Explanation
+
+**Frontend Layer**
+- Built using React and TypeScript.
+- Provides interactive dashboards and analytical interfaces.
+- Communicates with the backend through a centralized API service.
+
+**Backend Layer**
+- Built using FastAPI.
+- Handles API requests, dataset validation and analytical operations.
+- Uses Pydantic for request and response validation.
+
+**Machine Learning Layer**
+- Implements clustering, evaluation, dimensionality reduction and anomaly detection.
+- Uses Scikit-learn, NumPy, Pandas and SciPy.
+
+**Visualization Layer**
+- Presents analytical results through interactive frontend visualizations.
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
+
+| Technology | Usage |
+|---|---|
+| React 18 | User interface |
+| TypeScript | Type-safe development |
+| Vite | Frontend build tool |
+| Tailwind CSS | Styling |
+| Recharts | Data visualization |
+| Lucide React | Icons |
+| React Router | Application navigation |
+| i18next | Multilingual support |
+| PapaParse | CSV parsing |
+
+### Backend
+
+| Technology | Usage |
+|---|---|
+| Python 3.11 | Backend development |
+| FastAPI | REST API development |
+| Pydantic | Data validation |
+| Uvicorn | ASGI server |
+| Python Multipart | File upload handling |
+
+### Machine Learning and Data Analysis
+
+| Library | Usage |
+|---|---|
+| NumPy | Numerical computations |
+| Pandas | Data processing |
+| Scikit-learn | Machine learning algorithms |
+| SciPy | Scientific computing |
+
+### Deployment and Development
+
+- Git and GitHub
+- Visual Studio Code
+- Vercel
+- npm
+- Python Virtual Environment
+
+---
+
+## 📂 Project Structure
 
 ```text
 MandiCluster/
-├── api/                                # FastAPI Backend
-│   ├── index.py                        # API routes & serverless entrypoint
-│   ├── schemas/models.py               # Pydantic data schemas
+│
+├── api/
+│   ├── index.py
+│   │
+│   ├── schemas/
+│   │   └── models.py
+│   │
 │   ├── data/
-│   │   ├── agmarknet_sample.csv        # Realistic Indian mandi dataset (4,482 records)
-│   │   └── ingestion.py                # CSV validation, column standardization, cleaning
-│   └── ml/                             # Scikit-learn ML implementations
-│       ├── features.py                 # Statistical feature engineering
-│       ├── clustering.py               # KMeans, MiniBatch, Agglomerative, DBSCAN
-│       ├── evaluation.py               # Elbow curve, Silhouette, Davies-Bouldin
-│       ├── dim_reduction.py            # PCA vs t-SNE side-by-side
-│       ├── anomaly.py                  # Isolation Forest & LOF
-│       └── recommendation.py           # Freight-adjusted net proceeds
-├── src/                                # React Frontend
-│   ├── components/                     # Reusable UI components & layouts
-│   ├── pages/                          # Application pages (Home, Clustering, Anomaly, etc.)
-│   ├── i18n/                           # English, Hindi, Punjabi multilingual support
-│   ├── services/api.ts                 # Typed API client
-│   └── types/index.ts                  # TypeScript data interfaces
+│   │   ├── agmarknet_sample.csv
+│   │   └── ingestion.py
+│   │
+│   └── ml/
+│       ├── features.py
+│       ├── clustering.py
+│       ├── evaluation.py
+│       ├── dim_reduction.py
+│       ├── anomaly.py
+│       └── recommendation.py
+│
+├── public/
+│
+├── scripts/
+│
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── i18n/
+│   ├── services/
+│   │   └── api.ts
+│   └── types/
+│       └── index.ts
+│
 ├── tests/
-│   └── test_backend.py                 # Automated backend test suite
-├── vercel.json                         # Vercel deployment & rewrite configuration
-├── requirements.txt                    # Python serverless dependencies
-├── package.json                        # Node.js dependencies & scripts
-└── vite.config.ts                      # Vite build & local dev proxy configuration
+│   └── test_backend.py
+│
+├── .gitignore
+├── index.html
+├── package.json
+├── package-lock.json
+├── requirements.txt
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── tsconfig.node.json
+├── vercel.json
+└── vite.config.ts
 ```
 
 ---
 
-## 4. Local Development Setup
+## 📊 Dataset
+
+The project includes a sample agricultural market dataset:
+
+`api/data/agmarknet_sample.csv`
+
+The dataset contains 4,482 sample records, as documented in the project.
+
+It represents Indian agricultural market observations and is used for exploring price patterns and market relationships.
+
+### Important Data Attributes
+
+The backend works with standardized columns including:
+
+| Column | Description |
+|---|---|
+| Date | Market observation date |
+| State | State of the market |
+| District | District in which the market is located |
+| Market | Mandi or agricultural market name |
+| Commodity | Agricultural commodity |
+| Modal_Price | Modal market price |
+| Min_Price | Minimum recorded price |
+| Max_Price | Maximum recorded price |
+| Arrivals_Tonnes | Quantity of arrivals in tonnes |
+
+The application also supports user-uploaded CSV datasets through its validation endpoint.
+
+---
+
+## ⚙️ Installation and Local Setup
+
+Follow these steps to run MandiCluster locally.
 
 ### Prerequisites
-- Node.js (v18+) & npm
-- Python (3.10+)
 
-### 1. Backend Setup
-From the project root:
+Install the following:
+
+- Node.js and npm
+- Python 3.11
+- Git
+- Visual Studio Code (recommended)
+
+### Step 1: Clone the Repository
+
 ```bash
-# Run tests to verify ML pipeline
-python tests/test_backend.py
+git clone https://github.com/Sparsshgpt/MandiCluster.git
+```
 
-# Start FastAPI development server
+Navigate into the project:
+
+```bash
+cd MandiCluster
+```
+
+### Step 2: Set Up the Python Backend
+
+Create a virtual environment:
+
+```bash
+python -m venv venv
+```
+
+Activate it.
+
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+**Linux / macOS:**
+
+```bash
+source venv/bin/activate
+```
+
+Install backend dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 3: Start the Backend
+
+Run the FastAPI development server:
+
+```bash
 python -m uvicorn api.index:app --reload --port 8000
 ```
-API documentation is available at `http://localhost:8000/docs`.
 
-### 2. Frontend Setup
-In a separate terminal:
+The backend will be available at:
+
+```text
+http://localhost:8000
+```
+
+Interactive API documentation:
+
+```text
+http://localhost:8000/docs
+```
+
+### Step 4: Set Up the Frontend
+
+Open another terminal in the project directory.
+
+Install frontend dependencies:
+
 ```bash
-# Install dependencies
 npm install
+```
 
-# Start Vite development server
+### Step 5: Start the Frontend
+
+```bash
 npm run dev
 ```
-The application will be available at `http://localhost:3000`.
+
+The frontend will be available at:
+
+```text
+http://localhost:3000
+```
+
+The Vite development server proxies `/api` requests to the local FastAPI backend at port 8000.
+
+### Step 6: Run Backend Tests
+
+With the Python virtual environment activated:
+
+```bash
+python tests/test_backend.py
+```
 
 ---
 
-## 5. Vercel Deployment Instructions
+## 🔌 API Documentation
 
-The application is pre-configured for a single-project deployment on Vercel:
+MandiCluster provides REST API endpoints through FastAPI.
 
-1. **Push to GitHub:**
-   - Initialize git (if not already done), commit the project, and push to a GitHub repository.
-2. **Import to Vercel:**
-   - Log in to [vercel.com](https://vercel.com) and click **"Add New Project"**.
-   - Select your MandiCluster GitHub repository.
-3. **Build & Output Settings:**
-   - **Framework Preset:** Vite (automatically detected)
-   - **Root Directory:** `./`
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `dist`
-4. **Deploy:**
-   - Click **Deploy**. Vercel will build the React frontend and automatically mount `api/index.py` as a serverless Python function.
+The frontend communicates with the backend using a centralized API service.
+
+### Main API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/health` | Check backend health |
+| GET | `/api/metadata` | Retrieve dataset metadata |
+| POST | `/api/data/validate` | Upload and validate CSV data |
+| POST | `/api/market/summary` | Generate market analytics |
+| POST | `/api/market/compare` | Compare multiple markets |
+| POST | `/api/clustering/run` | Execute clustering algorithms |
+| POST | `/api/clustering/evaluate` | Evaluate clustering configurations |
+| POST | `/api/dimensionality-reduction/pca` | Generate dimensionality reduction comparison |
+| POST | `/api/anomaly-detection/run` | Detect price anomalies |
+| POST | `/api/recommendations/compare` | Generate logistics-adjusted recommendations |
+
+### API Documentation
+
+When running locally, access:
+
+```text
+http://localhost:8000/docs
+```
+
+This provides interactive documentation for testing API endpoints and understanding request and response schemas.
 
 ---
 
-## 6. Vercel Serverless Limitations for ML
+## 🚀 Deployment on Vercel
 
-When hosting ML workloads on Vercel's serverless infrastructure, note the following platform characteristics:
+MandiCluster is configured for deployment on Vercel using a single repository.
 
-1. **Stateless / Ephemeral Filesystem:**
-   - Serverless functions do not persist local files across invocations. Uploaded CSV datasets are stored in-memory during the warm container session.
-2. **Execution Timeout:**
-   - Serverless functions have execution limits (10s on Hobby, 60s on Pro). The current algorithms and sample dataset (4,482 rows) execute in < 0.5s, well within these limits.
-3. **Bundle Size Limit:**
-   - Serverless functions have a 250 MB uncompressed limit. The included packages (`scikit-learn`, `scipy`, `pandas`, `numpy`) fit within this quota.
-4. **Cold Starts:**
-   - The first request to a cold Python serverless function takes ~2–3 seconds while Python loads binary dependencies, after which subsequent calls remain fast.
+### Deployment Configuration
+
+The project uses:
+
+- Framework: Vite
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Backend Entry Point: `api/index.py`
+- Deployment Configuration: `vercel.json`
+
+### Deployment Steps
+
+1. Push the project to GitHub.
+2. Log in to Vercel.
+3. Select **Add New Project**.
+4. Import the MandiCluster repository.
+5. Configure the build settings.
+6. Deploy the application.
+7. Verify frontend and backend API functionality.
+
+### Production URLs
+
+**Live Application:**
+
+https://mandi-cluster.vercel.app/
+
+**GitHub Repository:**
+
+https://github.com/Sparsshgpt/MandiCluster
+
+### Serverless Deployment Considerations
+
+The backend uses Python serverless functions.
+
+Important considerations:
+
+- Serverless functions are stateless between invocations.
+- Uploaded datasets are maintained in an in-memory cache and are not guaranteed to persist between function instances.
+- Cold starts can increase the response time of the first request.
+- Python dependencies such as NumPy, SciPy, Pandas and Scikit-learn contribute significantly to deployment bundle size.
+- Execution time and deployment bundle limits depend on the Vercel plan and function configuration.
+
+For larger datasets or heavier ML workloads, a separately hosted Python backend may be a more suitable architecture.
+
+---
+
+## 🔒 Data Handling and Limitations
+
+- The included dataset is sample data and should not be treated as a live agricultural price feed.
+- Market recommendations are analytical estimates, not guaranteed selling outcomes.
+- Transportation and loading costs influence the calculated net proceeds.
+- Uploaded datasets are subject to the backend's validation requirements.
+- Uploaded data stored in serverless memory is not permanent storage.
+- Clustering results depend on the selected algorithm, features, scaling method and parameters.
+- Anomaly detection identifies unusual observations; it does not independently establish their causes.
+
+---
+
+## 🔮 Future Enhancements
+
+Potential improvements to make the platform more comprehensive:
+
+- Integration with live Agmarknet agricultural market data.
+- Real-time commodity price monitoring.
+- Advanced time-series price forecasting.
+- Weather-based agricultural market analysis.
+- Geographic market visualization using interactive maps.
+- More advanced recommendation algorithms.
+- Persistent cloud storage for uploaded datasets.
+- Background processing for large ML workloads.
+- User authentication and personalized dashboards.
+- Mobile-friendly farmer dashboard.
+- Additional regional language support.
+
+---
+
+## 🎓 Learning Outcomes
+
+This project demonstrates practical implementation of:
+
+- Unsupervised machine learning.
+- Statistical feature engineering.
+- Clustering algorithms and validation.
+- Dimensionality reduction.
+- Anomaly detection.
+- Data cleaning and preprocessing.
+- REST API development using FastAPI.
+- Frontend development using React and TypeScript.
+- Interactive data visualization.
+- Full-stack application integration.
+- Cloud deployment using Vercel.
+
+---
+
+## 👨‍💻 Author
+
+**Sparsh Gupta**
+
+B.Tech – Computer Science and Engineering (AI & ML)
+
+- GitHub: https://github.com/Sparsshgpt
+- Project Repository: https://github.com/Sparsshgpt/MandiCluster
+- Live Application: https://mandi-cluster.vercel.app/
+
+---
+
+## ⭐ Support
+
+If you find MandiCluster interesting or useful, consider giving the repository a star on GitHub.
+
+Your support and feedback are appreciated!
+
+---
+
+<p align="center">
+  <b>MandiCluster — Discover Markets. Understand Prices. Make Informed Decisions.</b>
+</p>
